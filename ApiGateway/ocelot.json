@@ -1,0 +1,52 @@
+﻿{
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/auth",
+            "UpstreamHttpMethod": [ "Post" ],
+            "DownstreamScheme": "https",
+            "DownstreamPathTemplate": "/api/auth",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5002
+                }
+            ]
+        },
+      {
+        "UpstreamPathTemplate": "/missingpets",
+        "UpstreamHttpMethod": [ "Get" ],
+        "DownstreamPathTemplate": "/api/missingpets",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5193
+          }
+        ],
+        "AuthenticationOptions": {
+          "AuthenticationProviderKey": "Bearer"
+        }
+      },
+        {
+            "UpstreamPathTemplate": "/shoes/{id}",
+            "UpstreamHttpMethod": ["Delete"],
+            "DownstreamPathTemplate": "/api/shoes/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5001
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer"
+            },
+            "RouteClaimsRequirement": {
+                "Role": "Administrator"
+            }
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:7077"
+    }
+}
