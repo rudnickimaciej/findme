@@ -9,8 +9,8 @@
             "DownstreamPathTemplate": "/api/auth/register",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5222
+                    "Host": "auth-service",
+                    "Port": 5000
                 }
             ]
         },
@@ -23,8 +23,8 @@
             "DownstreamPathTemplate": "/api/auth/login",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5222
+                    "Host": "auth-service",
+                    "Port": 5000
                 }
             ]
         },
@@ -37,8 +37,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5193
+                    "Host": "pet-service",
+                    "Port": 5001
                 }
             ],
             "AuthenticationOptions": {
@@ -54,8 +54,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5193
+                    "Host": "pet-service",
+                    "Port": 5001
                 }
             ],
             "AuthenticationOptions": {

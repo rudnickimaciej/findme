@@ -8,6 +8,10 @@ import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
+import Paw from 'mdi-material-ui/Paw'
+import CardSearchOutline from 'mdi-material-ui/CardSearch'
+
+
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 
 // ** Type import
@@ -16,14 +20,33 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Dashboard',
-      icon: HomeOutline,
-      path: '/'
+      sectionTitle: 'Missing pets'
+    },
+    {
+      title: 'Missing pets',
+      icon: CardSearchOutline,
+      path: '/missingpets/list'
     },
     {
       title: 'Add missing pet',
-      icon: CreditCardOutline,
-      path: '/add-missing-pet'
+      icon: Paw,
+      path: '/missingpets/add'
+    },
+    {
+      sectionTitle: 'Found pets'
+    },
+    {
+      title: 'Found pets',
+      icon: CardSearchOutline,
+      path: '/foundpets/list'
+    },
+    {
+      title: 'Add found pet',
+      icon: Paw,
+      path: '/foundpets/add'
+    },
+    {
+      sectionTitle: 'Account'
     },
     {
       title: 'Account Settings',

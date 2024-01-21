@@ -7,10 +7,10 @@ WORKDIR /app
 COPY . .
 
 # Restore the dependencies
-RUN dotnet restore "./PetService.API/PetService.API.csproj"
+RUN dotnet restore "./PetService.API.csproj"
 
 # Build and publish the application
-RUN dotnet publish "./PetService.API/PetService.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "./PetService.API.csproj" -c Release -o /app/publish
 
 # Use the ASP.NET Core runtime image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final

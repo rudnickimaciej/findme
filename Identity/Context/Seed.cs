@@ -14,9 +14,9 @@ namespace Identity.Context
             {
                 var users = new List<AppUser>
                 {
-                      new AppUser{DisplayName = "Maciek", UserName = "maciek", Email = "maciek@gmail.com", Bio ="bio"},
-                      new AppUser{DisplayName = "Paweł", UserName = "pawel", Email = "pawel@gmail.com", Bio ="bio"},
-                      new AppUser{DisplayName = "Tomek", UserName = "tomek", Email = "tomek@gmail.com", Bio ="bio"}
+                      new AppUser{DisplayName = "Maciek", UserName = "maciek", Email = "maciek@gmail.com"},
+                      new AppUser{DisplayName = "Paweł", UserName = "pawel", Email = "pawel@gmail.com"},
+                      new AppUser{DisplayName = "Tomek", UserName = "tomek", Email = "tomek@gmail.com"}
                 };
                 foreach (var user in users)
                 {

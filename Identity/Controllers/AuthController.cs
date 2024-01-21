@@ -90,7 +90,8 @@ namespace Identity.Controllers
             {
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
-                UserName = registerDto.UserName
+                UserName = registerDto.UserName,
+                RegistrationDate = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
