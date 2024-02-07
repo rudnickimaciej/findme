@@ -14,12 +14,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentityCore<AppUser>(opt =>
-            {
-                opt.Password.RequiredLength = 8;
-                opt.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<DataContext>();
+            // services.AddIdentityCore<AppUser>(opt =>
+            // {
+            //     opt.Password.RequiredLength = 8;
+            //     opt.User.RequireUniqueEmail = true;
+            // })
+            // .AddEntityFrameworkStores<DataContext>();
             //.AddDefaultTokenProviders();
 
             //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));

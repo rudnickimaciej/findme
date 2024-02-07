@@ -9,8 +9,8 @@
             "DownstreamPathTemplate": "/api/auth/register",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5222
+                    "Host": "auth-service",
+                    "Port": 8080
                 }
             ]
         },
@@ -23,8 +23,8 @@
             "DownstreamPathTemplate": "/api/auth/login",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5222
+                    "Host": "auth-service",
+                    "Port": 8080
                 }
             ]
         },
@@ -37,13 +37,10 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5193
+                    "Host": "pet-service",
+                    "Port": 8080
                 }
-            ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "Bearer"
-            }
+            ]
         },
         {
             "UpstreamPathTemplate": "/missingpets/{id}",
@@ -54,8 +51,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 5193
+                    "Host": "pet-service",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -64,6 +61,6 @@
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "https://localhost:7077"
+        "BaseUrl": "http://api-gateway"
     }
 }

@@ -5,7 +5,7 @@ using PetService.Domain.ValueObjects;
 
 namespace PetService.Infrastructure
 {
-    public class DataContext : IdentityDbContext<AppUser>
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {

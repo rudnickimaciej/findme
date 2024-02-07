@@ -8,30 +8,12 @@ namespace PetService.Infrastructure
     {
         private const string DefaultPassword = "Pa$$w0rd";
 
-        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+        public static void SeedData(DataContext context)
         {
-            await SeedUsers(userManager);
             SeedBreads(context);
             SeedMissingPets(context);
         }
 
-        private static async Task SeedUsers(UserManager<AppUser> userManager)
-        {
-            if (!userManager.Users.Any())
-            {
-                var users = new List<AppUser>
-                {
-                    new AppUser {DisplayName = "Maciek", UserName = "maciek", Email = "maciek@gmail.com", Bio = "a"},
-                    new AppUser {DisplayName = "Paweł", UserName = "pawel", Email = "pawel@gmail.com", Bio = "a"},
-                    new AppUser {DisplayName = "Tomek", UserName = "tomek", Email = "tomek@gmail.com", Bio = "a"}
-                };
-
-                foreach (var user in users)
-                {
-                    await userManager.CreateAsync(user, DefaultPassword);
-                }
-            }
-        }
 
         private static void SeedBreads(DataContext context)
         {

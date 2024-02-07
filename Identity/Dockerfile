@@ -7,16 +7,16 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-ARG ASPNETCORE_ENVIRONMENT
-# Set ASP.NET Core environment to the provided value
-ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-COPY ["Identity/appsettings.${ASPNETCORE_ENVIRONMENT}.json", "Identity/appsettings.json"]
+# ARG ASPNETCORE_ENVIRONMENT
+# # Set ASP.NET Core environment to the provided value
+# ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+# COPY ["Identity/appsettings.${ASPNETCORE_ENVIRONMENT}.json", "Identity/appsettings.json"]
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Identity/Identity.csproj", "Identity/"]
-COPY ["JwtTokenAuthentication/JwtTokenAuthentication.csproj", "JwtTokenAuthentication/"]
+COPY ["./Identity/Identity.csproj", "Identity/"]
+COPY ["./JwtTokenAuthentication/JwtTokenAuthentication.csproj", "JwtTokenAuthentication/"]
 RUN dotnet restore "./Identity/./Identity.csproj"
 COPY . .
 WORKDIR "/src/Identity"
