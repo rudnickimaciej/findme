@@ -1,8 +1,8 @@
-docker build -t apigateway -f .\ApiGateway\Dockerfile .
+docker build -t findpetregistry.azurecr.io/apigateway:latest -f .\ApiGateway\Dockerfile .
 
-docker build -t petservice -f .\PetService.API\Dockerfile .
+docker build -t findpetregistry.azurecr.io/petservice:latest -f .\PetService.API\Dockerfile .
 
-docker build -t authservice -f .\Identity\Dockerfile .
+# docker build -t authservice -f .\Identity\Dockerfile .
 
 
 

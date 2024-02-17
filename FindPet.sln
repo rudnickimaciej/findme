@@ -20,9 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{BFAF1BAD-C408-4D4C-B29E-607266AC40C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C6E31CB-C99B-4C40-8A56-5F3E036E0C28}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{046A1E45-3C78-4612-861A-975252447290}"
 EndProject
@@ -42,15 +39,32 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bus", "Bus\Bus.csproj", "{3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.IoC", "Infra.IoC\Infra.IoC.csproj", "{3D71BDA1-2B10-4664-8D18-61EDEDD14149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.API", "FileService.API\FileService.API.csproj", "{B20608EA-03E6-468D-956A-52873811254C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileService.API", "FileService.API\FileService.API.csproj", "{B20608EA-03E6-468D-956A-52873811254C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{9D7C13B6-8254-471A-89EF-78439C86095B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{9D7C13B6-8254-471A-89EF-78439C86095B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{212DC804-0A01-4701-884F-BC5683CF9523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "Identity\Identity.csproj", "{96CDB3E4-A9D3-4243-96B6-969DBB5A0B77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "Identity\Identity.csproj", "{96CDB3E4-A9D3-4243-96B6-969DBB5A0B77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtTokenAuthentication", "JwtTokenAuthentication\JwtTokenAuthentication.csproj", "{F81B7750-41C2-4960-9BE2-85D531697DC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtTokenAuthentication", "JwtTokenAuthentication\JwtTokenAuthentication.csproj", "{F81B7750-41C2-4960-9BE2-85D531697DC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure", "Azure", "{8EE35623-03E8-42FE-A7CC-5F421417A209}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{0B36655F-412A-48DC-A972-A9BC06D83640}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Containers", "Containers", "{40F484A4-1B88-4C63-9582-F0EBC8175020}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService", "{6C775B0C-1C45-40BB-8572-45ED5A8731D2}"
+	ProjectSection(SolutionItems) = preProject
+		authservice.deploy.ps1 = authservice.deploy.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetService", "PetService", "{050323A9-A3B1-4E59-8A93-06A6CFFBB619}"
+	ProjectSection(SolutionItems) = preProject
+		petservice.json = petservice.json
+		petservice.ps1 = petservice.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +142,11 @@ Global
 		{212DC804-0A01-4701-884F-BC5683CF9523} = {EBA081FF-D33C-4089-A2D2-95DDA584E1CA}
 		{96CDB3E4-A9D3-4243-96B6-969DBB5A0B77} = {212DC804-0A01-4701-884F-BC5683CF9523}
 		{F81B7750-41C2-4960-9BE2-85D531697DC2} = {D5A0A73F-64DE-4EC9-8EE3-72E7A0A26949}
+		{8EE35623-03E8-42FE-A7CC-5F421417A209} = {5C6E31CB-C99B-4C40-8A56-5F3E036E0C28}
+		{0B36655F-412A-48DC-A972-A9BC06D83640} = {8EE35623-03E8-42FE-A7CC-5F421417A209}
+		{40F484A4-1B88-4C63-9582-F0EBC8175020} = {0B36655F-412A-48DC-A972-A9BC06D83640}
+		{6C775B0C-1C45-40BB-8572-45ED5A8731D2} = {40F484A4-1B88-4C63-9582-F0EBC8175020}
+		{050323A9-A3B1-4E59-8A93-06A6CFFBB619} = {40F484A4-1B88-4C63-9582-F0EBC8175020}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7B23829-8A09-40F0-8DAF-B3E3997942B5}

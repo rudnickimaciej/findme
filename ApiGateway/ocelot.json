@@ -37,8 +37,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "pet-service",
-                    "Port": 8080
+                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
+                    "Port": 80
                 }
             ]
         },
@@ -59,8 +59,5 @@
                 "AuthenticationProviderKey": "Bearer"
             }
         }
-    ],
-    "GlobalConfiguration": {
-        "BaseUrl": "http://api-gateway"
-    }
+    ]
 }

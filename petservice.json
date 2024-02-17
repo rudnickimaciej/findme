@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerapps_petservice_name": {
+      "defaultValue": "petservice",
+      "type": "String"
+    },
+    "findpet-env": {
+      "defaultValue": "/subscriptions/22491f2a-24ef-4881-856f-0262a72034be/resourceGroups/TestResourceGroup/providers/Microsoft.App/managedEnvironments/findpet-env",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.App/containerapps",
+      "apiVersion": "2023-08-01-preview",
+      "name": "[parameters('petservice_name')]",
+      "location": "West Europe",
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "managedEnvironmentId": "[parameters('findpet-env')]",
+        "environmentId": "[parameters('findpet-env')]",
+        "workloadProfileName": "Consumption",
+        "configuration": {
+          "secrets": [
+            {
+              "name": "reg-pswd-f757f08e-bfc5"
+            }
+          ],
+          "activeRevisionsMode": "Single",
+          "ingress": {
+            "external": true,
+            "targetPort": 80,
+            "exposedPort": 0,
+            "transport": "Auto",
+            "traffic": [
+              {
+                "weight": 100,
+                "latestRevision": true
+              }
+            ],
+            "allowInsecure": false,
+            "stickySessions": {
+              "affinity": "none"
+            }
+          },
+          "registries": [
+            {
+              "server": "findpetregistry.azurecr.io",
+              "username": "findpetregistry",
+              "passwordSecretRef": "reg-pswd-f757f08e-bfc5"
+            }
+          ]
+        },
+        "template": {
+          "containers": [
+            {
+              "image": "[concat('findpetregistry.azurecr.io/', parameters('containerapps_petservice_name'), ':latest2')]",
+              "name": "[parameters('containerapps_petservice_name')]",
+              "resources": {
+                "cpu": 0.25,
+                "memory": "0.5Gi"
+              },
+              "probes": []
+            }
+          ],
+          "scale": {
+            "minReplicas": 1,
+            "maxReplicas": 1
+          },
+          "volumes": []
+        }
+      }
+    }
+  ]
+}

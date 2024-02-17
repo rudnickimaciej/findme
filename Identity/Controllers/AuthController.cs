@@ -6,7 +6,6 @@ using Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -21,7 +20,8 @@ namespace Identity.Controllers
     {
         public UserManager<AppUser> _userManager { get; }
         public TokenService _tokenService { get; }
-        private readonly IEmailSender _emailSender;
+
+        //private readonly IEmailSender _emailSender;
         //private readonly IRabbitMqPublisher _rabbitPublisher;
 
 

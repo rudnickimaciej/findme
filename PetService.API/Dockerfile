@@ -3,10 +3,11 @@
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
+EXPOSE 443
+ENV ASPNETCORE_URLS=http://+:80;
 
 # ARG ASPNETCORE_ENVIRONMENT
 # # Set ASP.NET Core environment to the provided value
@@ -14,16 +15,16 @@ EXPOSE 8081
 # COPY ["PetService.API/appsettings.${ASPNETCORE_ENVIRONMENT}.json", "PetService.API/appsettings.json"]
 
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["PetService.API.csproj", "PetService.API/"]
-COPY ["Infra.IoC/Infra.IoC.csproj", "Infra.IoC/"]
-COPY ["Bus.csproj", "Bus/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
-COPY ["PetService.Application/PetService.Application.csproj", "PetService.Application/"]
-COPY ["PetService.Domain/PetService.Domain.csproj", "PetService.Domain/"]
-COPY ["PetService.Infrastructure/PetService.Infrastructure.csproj", "PetService.Infrastructure/"]
+COPY ["./PetService.API/PetService.API.csproj", "PetService.API/"]
+COPY ["./Infra.IoC/Infra.IoC.csproj", "Infra.IoC/"]
+COPY ["./Bus/Bus.csproj", "Bus/"]
+COPY ["./Shared/Shared.csproj", "Shared/"]
+COPY ["./PetService.Application/PetService.Application.csproj", "PetService.Application/"]
+COPY ["./PetService.Domain/PetService.Domain.csproj", "PetService.Domain/"]
+COPY ["./PetService.Infrastructure/PetService.Infrastructure.csproj", "PetService.Infrastructure/"]
 RUN dotnet restore "./PetService.API/./PetService.API.csproj"
 COPY . .
 WORKDIR "/src/PetService.API"

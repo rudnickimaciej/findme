@@ -1,17 +1,29 @@
-using API.Extensions;
 using Infra.IoC;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PetService.API.Extensions;
 using PetService.API.FileAPI;
 using PetService.Application.Profiles;
-using PetService.Domain;
 using PetService.Infrastructure;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var keyVaultUrl = builder.Configuration.GetSection("KeyVaultConfig:KeyVaultUrl");
+var tenantId = builder.Configuration.GetSection("KeyVaultConfig:TenantId");
+var clientId = builder.Configuration.GetSection("KeyVaultConfig:ClientId");
+var clientSecret = builder.Configuration.GetSection("KeyVaultConfig:ClientSecretId"); 
+var credential = new ClientSecretCredential(tenantId.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString());
 
+builder.Configuration.AddAzureKeyVault(keyVaultUrl.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString(), new DefaultKeyVaultSecretManager());
+var client = new SecretClient(new Uri(keyVaultUrl.Value!.ToString()), credential);
 
+var sqlconnection = client.GetSecret("sqlconnectionstring").Value.Value.ToString();
+builder.Services.AddDbContext<DbContext>(options =>
+{
+    options.UseSqlServer(sqlconnection);
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
