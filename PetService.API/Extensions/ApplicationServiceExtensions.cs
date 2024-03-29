@@ -21,7 +21,11 @@ namespace PetService.API.Extensions
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(List.Handler).Assembly));
+            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(List.Handler).Assembly));
+            var assembly = typeof(Program).Assembly;
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+            services.AddValidatorsFromAssembly(assembly);
+
             services.RegisterRabbitMQ();
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddFluentValidationAutoValidation();

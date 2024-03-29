@@ -7,20 +7,21 @@ using PetService.Infrastructure;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
+using PetService.API.Features.MissingPetPost;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var keyVaultUrl = builder.Configuration.GetSection("KeyVaultConfig:KeyVaultUrl");
 var tenantId = builder.Configuration.GetSection("KeyVaultConfig:TenantId");
 var clientId = builder.Configuration.GetSection("KeyVaultConfig:ClientId");
-var clientSecret = builder.Configuration.GetSection("KeyVaultConfig:ClientSecretId"); 
+var clientSecret = builder.Configuration.GetSection("KeyVaultConfig:ClientSecretId");
 var credential = new ClientSecretCredential(tenantId.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString());
 
 builder.Configuration.AddAzureKeyVault(keyVaultUrl.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString(), new DefaultKeyVaultSecretManager());
 var client = new SecretClient(new Uri(keyVaultUrl.Value!.ToString()), credential);
 
 var sqlconnection = client.GetSecret("sqlconnectionstring").Value.Value.ToString();
-builder.Services.AddDbContext<DbContext>(options =>
+builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(sqlconnection);
 });
@@ -74,8 +75,8 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var logger = services.GetRequiredService<ILogger<Program>>();
 
-logger.LogInformation("DefaultConnection:"); // Log "Test" message
-logger.LogInformation(builder.Configuration.GetConnectionString("DefaultConnection")); // Log "Test" message
+logger.LogInformation($"DefaultConnection: {builder.Configuration.GetConnectionString("DefaultConnection")}"); // Log "Test" message
+logger.LogInformation($"Azure Key Vault sqlconnectionstring: {sqlconnection.Substring(0, 10)}"); // Log "Test" message
 
 try
 {
@@ -91,4 +92,6 @@ catch (Exception ex)
 }
 
 #endregion
+
+CreateMissingPetPost.MapEndpoint(app);
 app.Run();

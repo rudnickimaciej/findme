@@ -1,0 +1,66 @@
+﻿{
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/auth/register",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "DownstreamScheme": "http",
+            "DownstreamPathTemplate": "/api/auth/register",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "auth-service",
+                    "Port": 8080
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/auth/login",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "DownstreamScheme": "http",
+            "DownstreamPathTemplate": "/api/auth/login",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "auth-service",
+                    "Port": 8080
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/missingpets",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "DownstreamPathTemplate": "/api/missingpets",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "https://findpet.internal.braveground-9885100b.westeurope.azurecontainerapps.io",
+                    "Port": 80
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/missingpets/{id}",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "DownstreamPathTemplate": "/api/missingpets/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "pet-service",
+                    "Port": 8080
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer"
+            }
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://api-gateway"
+    }
+}

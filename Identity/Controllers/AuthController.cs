@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Text;
+using Azure.Messaging.ServiceBus;
 using Identity.DTOs;
 using Identity.Models;
 using Identity.Services;
@@ -72,6 +73,7 @@ namespace Identity.Controllers
 
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            return await RegisterWithEmailConfirmation(registerDto);
             // if (_apiOptions.VerifyEmail)
             // if (true)
             //     return await RegisterWithEmailConfirmation(registerDto);
@@ -141,11 +143,11 @@ namespace Identity.Controllers
             if (result.Succeeded)
             {
                 var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action("ConfirmEmail", "EmailConfirmation",
-           new { userId = user.Id, token = emailConfirmationToken }, Request.Scheme);
+                var confirmationLink = Url.Action("ConfirmEmail", "Auth", new { userId = user.Id, token = emailConfirmationToken }, Request.Scheme);
 
                 //await _emailSender.SendEmailAsync(user.Email, "Confirm Your Email",
                 //            $"Please confirm your email by clicking <a href='{confirmationLink}'>here</a>.");
+                await SendRegistrationEmail(user.Email, confirmationLink);
                 return Ok("Registration successful. Please check your email for confirmation instructions.");
 
             }
@@ -153,14 +155,44 @@ namespace Identity.Controllers
 
 
         }
-
         [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            return CreateUserObject(user);
+            if (userId == null || token == null)
+            {
+                // Handle the case where user ID or token is null
+                return BadRequest("User ID or token is null.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                // Handle the case where user is not found
+                return BadRequest($"Unable to find user with ID '{userId}'.");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                // Email successfully confirmed
+                // You can redirect to a success page or return a message
+                return Ok("Email confirmed successfully.");
+            }
+            else
+            {
+                // Failed to confirm email
+                // You can redirect to an error page or return a message
+                return BadRequest("Failed to confirm email.");
+            }
         }
+
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<ActionResult<UserDto>> GetCurrentUser()
+        //{
+        //    var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+        //    return CreateUserObject(user);
+        //}
 
         private UserDto CreateUserObject(AppUser user)
         {
@@ -171,6 +203,33 @@ namespace Identity.Controllers
                 Token = _tokenService.CreateToken(user),
                 UserName = user.UserName
             };
+        }
+
+        private async Task SendRegistrationEmail(string registeredUserEmail, string confirmationLink)
+        {
+            string connectionString = "Endpoint=sb://findpet.servicebus.windows.net/;SharedAccessKeyName=testpolicy;SharedAccessKey=q4xXd4Oo1AH4uyx8vzTsEZUrLppkHTotp+ASbNV+fNY=;EntityPath=sendemailqueue";
+            string queueName = "sendemailqueue";
+            await using (var client = new ServiceBusClient(connectionString))
+            {
+                // Create a ServiceBusSender instance
+                var sender = client.CreateSender(queueName);
+
+                // Create a message
+                var message = new EmailServiceBusMessage()
+                {
+                    EmailBody = $"Click this link {confirmationLink} to finish registration",
+                    EmailSubject = "FindPet registration",
+                    EmailSender = "mrrudnickiunity@gmail.com",
+                    EmailReceiver = registeredUserEmail
+                };
+                string messageSerialized = JsonConvert.SerializeObject(message);
+
+
+                // Send the message to the queue
+                await sender.SendMessageAsync(new ServiceBusMessage(messageSerialized));
+
+                Console.WriteLine("Message sent successfully.");
+            }
         }
     }
 }

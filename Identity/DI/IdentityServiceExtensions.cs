@@ -17,7 +17,9 @@ namespace Identity.DI
                 opt.Password.RequiredLength = 8;
                 opt.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<DataContext>();
+            .AddEntityFrameworkStores<DataContext>()
+            .AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
+
 
             services.AddScoped<TokenService>();
             return services;

@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/22491f2a-24ef-4881-856f-0262a72034be/resourceGroups/TestResourceGroup/providers/Microsoft.Web/sites/findpet-frontend",
+    "appService.deploySubpath": "Presentation\\website"
+}

@@ -1,11 +1,13 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Identity.Context;
 using Identity.DI;
 using Identity.Models;
-using Identity.Services;
-using JwtTokenAuthentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using JwtTokenAuthentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +17,33 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddIdentityServices(builder.Configuration);
+var keyVaultUrl = builder.Configuration.GetSection("KeyVaultConfig:KeyVaultUrl");
 
-//builder.Services.AddJwtAuthentication();
+if (!Convert.ToBoolean(builder.Configuration["IsLocal"]))
+{
+    builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUrl.Value!.ToString()), new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions { ManagedIdentityClientId = "2f512807-0c81-47b3-8909-6faf67099ab2" }//required when using user ManagedIdentity
+));
+};
+
+//var keyVaultUrl = builder.Configuration.GetSection("KeyVaultConfig:KeyVaultUrl");
+//var tenantId = builder.Configuration.GetSection("KeyVaultConfig:TenantId");
+//var clientId = builder.Configuration.GetSection("KeyVaultConfig:ClientId");
+//var clientSecret = builder.Configuration.GetSection("KeyVaultConfig:ClientSecretId");
+//var credential = new ClientSecretCredential(tenantId.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString());
+
+//builder.Configuration.AddAzureKeyVault(keyVaultUrl.Value!.ToString(), clientId.Value!.ToString(), clientSecret.Value!.ToString(), new DefaultKeyVaultSecretManager());
+//var client = new SecretClient(new Uri(keyVaultUrl.Value!.ToString()), credential);
+var sqlconnection = builder.Configuration["sqlconnectionstring"];
+//var sqlconnection = client.GetSecret("sqlconnectionstring").Value.Value.ToString();
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(sqlconnection);
+});
+
+builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddDataProtection();
+builder.Services.AddJwtAuthentication();
 
 var app = builder.Build();
 
@@ -41,6 +63,10 @@ app.MapControllers();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
+var logger = services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation($"DefaultConnection: {builder.Configuration.GetConnectionString("DefaultConnection")}"); // Log "Test" message
+logger.LogInformation($"Azure Key Vault sqlconnectionstring: {sqlconnection.Substring(0, 10)}"); // Log "Test" message
+
 try
 {
     var context = services.GetRequiredService<DataContext>();
@@ -51,7 +77,7 @@ try
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration");
 }
 app.Run();
+app.UseDeveloperExceptionPage();
