@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Azure.Messaging.ServiceBus;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -9,13 +10,13 @@ using System.Text;
 
 namespace Shared
 {
-    public sealed class RabbitMQBus : IEventBus
+    public sealed class AzureServiceBus : IEventBus
     {
         private readonly Dictionary<string, List<Type>> _handlers;
         private readonly List<Type> _eventTypes;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public RabbitMQBus(IServiceScopeFactory serviceScopeFactory)
+        public AzureServiceBus(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _handlers = new Dictionary<string, List<Type>>();
@@ -28,19 +29,14 @@ namespace Shared
 
         public async Task Publish<T>(T @event, string queue) where T : Event
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                var eventName = @event.GetType().Name;
+            string connectionString = "Endpoint=sb://findpet.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Tu63jsI98VKfPqiaGvYSswyhNqsBykCTP+ASbLpEoiY=";
+            string queueName = @event.GetType().Name;
 
-                channel.QueueDeclare(eventName, false, false, false, null);
+            await using var client = new ServiceBusClient(connectionString);
+            await using var sender = client.CreateSender(queue);
 
-                var message = JsonConvert.SerializeObject(@event);
-                var body = Encoding.UTF8.GetBytes(message);
-
-                channel.BasicPublish("", eventName, null, body);
-            }
+            var message = new ServiceBusMessage(JsonConvert.SerializeObject(@event));
+            await sender.SendMessageAsync(message);
 
         }
 

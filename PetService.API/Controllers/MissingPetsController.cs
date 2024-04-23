@@ -70,7 +70,7 @@ public class MissingPetsController : ApiBaseController
                 {
                     try
                     {
-                        this._bus.Publish(new MissingPetAdded(pe));
+                        this._bus.Publish(new MissingPetAdded(pe),"");
                     }
                     catch (Exception e)
                     {

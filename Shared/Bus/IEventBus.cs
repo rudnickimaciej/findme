@@ -13,7 +13,7 @@ namespace Shared.Bus
     {
         //Task SendCommand<T>(T command) where T : Command;
 
-        void Publish<T>(T @event) where T : Event;
+        Task Publish<T>(T @event, string queue) where T : Event;
 
         void Subscribe<T, TH>()
             where T : Event

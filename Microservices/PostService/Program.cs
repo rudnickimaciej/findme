@@ -1,8 +1,6 @@
 using PostService.Database;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using Microsoft.Extensions.Logging;
-using Microsoft.Data.SqlClient;
 using PetService.API.Features.MissingPetPost;
 using Shared.Bus;
 using Shared;

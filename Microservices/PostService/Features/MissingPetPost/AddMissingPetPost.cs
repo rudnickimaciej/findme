@@ -98,7 +98,7 @@ namespace PetService.API.Features.MissingPetPost
                     return Results.BadRequest(result.Error);
                 }
 
-                bus.Publish(new NewMissingPetPostAdded(result.Value));
+                await bus.Publish(new NewMissingPetPostAdded(result.Value),"missingpostaddedqueue");
                 var createdUri = $"api/missingpets/{result.Value.Id}"; // Assuming you have an endpoint to retrieve the created resource
 
                 //return Results.Ok(result.Value);

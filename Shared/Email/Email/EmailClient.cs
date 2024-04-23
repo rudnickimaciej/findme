@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace EmailAzureFunction2
+namespace Email
 {
+    public class EmailServiceBusMessage
+    {
+        public string EmailSender { get; set; }
+        public string EmailReceiver { get; set; }
+        public string EmailBody { get; set; }
+        public string EmailSubject { get; set; }
+        public string NotificationType { get; set; }
+    }
     public interface IEmailClient
     {
         //Task Send(EmailServiceBusMessage message);
-        Task Send(EmailServiceBusMessage message, string EmailHTMLBody=null);
+        Task Send(EmailServiceBusMessage message, string EmailHTMLBody = null);
 
     }
 
     public class EmailClient : IEmailClient
     {
-        private readonly ILogger _logger;
         //private readonly IOptions<> _smptConfiguration;
 
-        public EmailClient(ILogger logger)
-        {
-            _logger = logger;
-        }
+
 
         public async Task Send(EmailServiceBusMessage message, string EmailHTMLBody = null)
         {
@@ -54,7 +51,6 @@ namespace EmailAzureFunction2
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
             }
         }
     }

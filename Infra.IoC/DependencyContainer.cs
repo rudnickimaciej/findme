@@ -1,5 +1,4 @@
 ﻿
-using Bus;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Bus;
@@ -14,11 +13,11 @@ namespace Infra.IoC
         public static void RegisterRabbitMQ(this IServiceCollection services)
         {
             //Domain Bus
-            services.AddSingleton<IEventBus, RabbitMQBus>(sp =>
-            {
-                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
-                return new RabbitMQBus("amqp://guest:guest@localhost:5672", scopeFactory);
-            });
+            //services.AddSingleton<IEventBus, RabbitMQBus>(sp =>
+            //{
+            //    var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+            //    return new RabbitMQBus("amqp://guest:guest@localhost:5672", scopeFactory);
+            //});
 
             //Subscriptions
             //services.AddTransient<TransferEventHandler>();
