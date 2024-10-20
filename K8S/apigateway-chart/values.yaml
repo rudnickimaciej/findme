@@ -1,0 +1,28 @@
+replicaCount: 2
+
+image:
+  repository: apigateway
+  tag: "latest"
+  pullPolicy: Never
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+serviceAccount:
+  create: false  
+  name: ""     
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false

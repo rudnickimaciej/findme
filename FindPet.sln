@@ -85,7 +85,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ARM Teamplates", "ARM Teamp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build scripts", "build scripts", "{2A9843C6-9C35-4A1E-B358-21ABC41A6856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService.tests", "tests\PostService.tests\PostService.tests.csproj", "{BF01FA8E-FC8B-407F-BC2E-8026520C8993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostService.tests", "tests\PostService.tests\PostService.tests.csproj", "{BF01FA8E-FC8B-407F-BC2E-8026520C8993}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{129E41AB-AD55-4EDA-BBAF-7B40973A4B66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apigateway-chart", "apigateway-chart", "{3D2BC326-9B4D-46FD-9974-318AAF490091}"
+	ProjectSection(SolutionItems) = preProject
+		Chart.yaml = Chart.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -190,6 +197,7 @@ Global
 		{05A860A4-269B-4D6B-9D95-C5A73E410966} = {B4E5236F-BF94-4751-91C8-3DA3A4839315}
 		{2A9843C6-9C35-4A1E-B358-21ABC41A6856} = {B4E5236F-BF94-4751-91C8-3DA3A4839315}
 		{BF01FA8E-FC8B-407F-BC2E-8026520C8993} = {389C9D04-57BE-406A-A211-1F79A0018E98}
+		{3D2BC326-9B4D-46FD-9974-318AAF490091} = {129E41AB-AD55-4EDA-BBAF-7B40973A4B66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7B23829-8A09-40F0-8DAF-B3E3997942B5}
