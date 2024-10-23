@@ -1,13 +1,14 @@
 replicaCount: 2
 
 image:
-  repository: apigateway
+  repository: draho97/apigateway
   tag: "latest"
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
+  targetPort: 80
 
 resources:
   limits:

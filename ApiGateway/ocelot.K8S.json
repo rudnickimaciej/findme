@@ -37,21 +37,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ]
-        },
-        {
-            "UpstreamPathTemplate": "/missingpets2",
-            "UpstreamHttpMethod": [
-                "Get"
-            ],
-            "DownstreamPathTemplate": "/api/missingpet2",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
+                    "Host": "postservice",
                     "Port": 80
                 }
             ]

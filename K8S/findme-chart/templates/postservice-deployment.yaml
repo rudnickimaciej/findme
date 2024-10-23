@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-deployment" .Values.postservice.name }}
+  labels:
+    app: {{ include "findme-chart.name" . }}
+spec:
+  replicas: {{ .Values.postservice.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "findme-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "findme-chart.name" . }}
+    spec:
+      containers:
+        - name: apigateway
+          image: "{{ .Values.postservice.image.repository }}:{{ .Values.postservice.image.tag }}"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: {{ .Values.postservice.resources.limits.cpu }}
+              memory: {{ .Values.postservice.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.postservice.resources.requests.cpu }}
+              memory: {{ .Values.postservice.resources.requests.memory }}

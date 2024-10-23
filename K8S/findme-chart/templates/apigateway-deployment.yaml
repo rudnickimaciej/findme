@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-deployment" .Values.apigateway.name }}
+  labels:
+    app: {{ include "findme-chart.name" . }}
+spec:
+  replicas: {{ .Values.apigateway.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "findme-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "findme-chart.name" . }}
+    spec:
+      containers:
+        - name: apigateway
+          image: "{{ .Values.apigateway.image.repository }}:{{ .Values.apigateway.image.tag }}"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: {{ .Values.apigateway.resources.limits.cpu }}
+              memory: {{ .Values.apigateway.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.apigateway.resources.requests.cpu }}
+              memory: {{ .Values.apigateway.resources.requests.memory }}
+          volumeMounts:                          
+            - name: ocelot-config-volume
+              mountPath: /app/ocelot.json
+              subPath: ocelot.json
+      volumes:                                
+        - name: ocelot-config-volume
+          configMap:
+            name: ocelot-config
+            items:
+              - key: ocelot.json
+                path: ocelot.json

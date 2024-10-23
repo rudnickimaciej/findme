@@ -42,19 +42,23 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var logger = services.GetRequiredService<ILogger<Program>>();
 
-try
+app.MapGet("api/missingpets", () =>
 {
-    var context = services.GetRequiredService<DataContext>();
+    return "MissingPets";
+});
+//try
+//{
+//    var context = services.GetRequiredService<DataContext>();
 
-    await context.Database.MigrateAsync();
-    Seed.SeedData(context);
-}
-catch (Exception ex)
-{
-    logger.LogError(ex, "An error occured during migration");
-}
-AddMissingPetPost.MapEndpoint(app);
-GetMissingPetPost.MapEndpoint(app);
+//    await context.Database.MigrateAsync();
+//    Seed.SeedData(context);
+//}
+//catch (Exception ex)
+//{
+//    logger.LogError(ex, "An error occured during migration");
+//}
+//AddMissingPetPost.MapEndpoint(app);
+//GetMissingPetPost.MapEndpoint(app);
 
 #endregion
 app.Run();
