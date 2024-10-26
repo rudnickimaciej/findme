@@ -37,7 +37,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "https://findpet.internal.braveground-9885100b.westeurope.azurecontainerapps.io",
+                    "Host": "",
                     "Port": 80
                 }
             ]
