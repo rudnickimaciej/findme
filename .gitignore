@@ -230,5 +230,12 @@ paket-files/
 **/appsettings.dev.json
 **/appsettings.prod.json
 
+**/appsettings*.json
 
 
+/ApiGateway/ocelot.prod.json
+/register_user.json
+/ApiGateway/ocelot.azure.json
+/ApiGateway/ocelot.dev.json
+/ApiGateway/ocelot.K8S.json
+/EmailService/appsettings.json
