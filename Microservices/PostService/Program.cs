@@ -46,6 +46,10 @@ app.MapGet("api/missingpets", () =>
 {
     return "MissingPets";
 });
+app.MapGet("api/missingpets/{id}", (int id) =>
+{
+    return $"MissingPet with id = {id}";
+});
 //try
 //{
 //    var context = services.GetRequiredService<DataContext>();

@@ -27,13 +27,13 @@ namespace Identity.Controllers
 
 
         public AuthController(
-            UserManager<AppUser> userManager,
+            //UserManager<AppUser> userManager,
         TokenService tokenService
         //IRabbitMqPublisher rabbitPublisher
         )
         {
             this._tokenService = tokenService;
-            this._userManager = userManager;
+            //this._userManager = userManager;
             //this._emailSender = emailSender;
             //this._rabbitPublisher = rabbitPublisher;
 
@@ -55,6 +55,11 @@ namespace Identity.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            return CreateUserObject(new AppUser() { 
+                DisplayName="Test User", 
+                UserName = "Test User", 
+                Email = "test@gmail.com", 
+                Id = Guid.NewGuid().ToString()});
 
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null)
@@ -73,6 +78,8 @@ namespace Identity.Controllers
 
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            return Ok("register sucessfull");
+
             return await RegisterWithEmailConfirmation(registerDto);
             // if (_apiOptions.VerifyEmail)
             // if (true)

@@ -29,6 +29,31 @@ apigateway:
   autoscaling:
     enabled: false
 
+authservice:
+  replicaCount: 2
+  name: authservice
+  image:
+    repository: draho97/authservice
+    tag: "latest"
+    pullPolicy: Always
+
+  service:
+    type: NodePort
+    port: 80
+    targetPort: 80
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  serviceAccount:
+    create: false  
+    name: ""     
+  
 postservice:
   replicaCount: 2
   name: postservice

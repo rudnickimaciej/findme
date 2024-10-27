@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-deployment" .Values.authservice.name }}
+  labels:
+    app: {{ include "findme-chart.name" . }}
+spec:
+  replicas: {{ .Values.authservice.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "findme-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "findme-chart.name" . }}
+    spec:
+      containers:
+        - name: authservice
+          image: "{{ .Values.authservice.image.repository }}:{{ .Values.authservice.image.tag }}"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: {{ .Values.authservice.resources.limits.cpu }}
+              memory: {{ .Values.authservice.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.authservice.resources.requests.cpu }}
+              memory: {{ .Values.authservice.resources.requests.memory }}
+         

@@ -1,77 +1,46 @@
 ﻿{
-    "Routes": [
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/auth/login",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/auth/login",
+      "DownstreamHostAndPorts": [
         {
-            "UpstreamPathTemplate": "/auth/register",
-            "UpstreamHttpMethod": [
-                "Post"
-            ],
-            "DownstreamScheme": "http",
-            "DownstreamPathTemplate": "/api/auth/register",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "https://authservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ]
-        },
-        {
-            "UpstreamPathTemplate": "/auth/login",
-            "UpstreamHttpMethod": [
-                "Post"
-            ],
-            "DownstreamScheme": "http",
-            "DownstreamPathTemplate": "/api/auth/login",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "https://authservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ]
-        },
-        {
-            "UpstreamPathTemplate": "/missingpets",
-            "UpstreamHttpMethod": [
-                "Get"
-            ],
-            "DownstreamPathTemplate": "/api/missingpets",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ]
-        },
-        {
-            "UpstreamPathTemplate": "/missingpets2",
-            "UpstreamHttpMethod": [
-                "Get"
-            ],
-            "DownstreamPathTemplate": "/api/missingpet2",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ]
-        },
-        {
-            "UpstreamPathTemplate": "/missingpets/{id}",
-            "UpstreamHttpMethod": [
-                "Get"
-            ],
-            "DownstreamPathTemplate": "/api/missingpets/{id}",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "petservice.braveground-9885100b.westeurope.azurecontainerapps.io",
-                    "Port": 80
-                }
-            ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "Bearer"
-            }
+          "Host": "authservice-service",
+          "Port": 80
         }
-    ]
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/missingpets",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/api/missingpets",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "postservice-service",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/missingpets/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/api/missingpets/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "postservice-service",
+          "Port": 80
+        }
+      ]
+    }
+  ]
 }
