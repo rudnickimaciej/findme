@@ -8,8 +8,6 @@ spec:
   type: {{ .Values.postservice.service.type }}
   ports:
     - port: {{ .Values.postservice.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+      targetPort: {{ .Values.postservice.service.targetPort }}
   selector:
     {{- include "findme-chart.selectorLabels" . | nindent 4 }}

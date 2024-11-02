@@ -9,5 +9,7 @@ spec:
   ports:
     - port: {{ .Values.apigateway.service.port }}
       targetPort: {{ .Values.apigateway.service.targetPort }}
+      nodePort: {{ .Values.apigateway.service.nodePort }}
+
   selector:
     app: {{ include "findme-chart.name" . }}

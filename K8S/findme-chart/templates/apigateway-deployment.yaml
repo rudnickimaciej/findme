@@ -18,7 +18,7 @@ spec:
         - name: apigateway
           image: "{{ .Values.apigateway.image.repository }}:{{ .Values.apigateway.image.tag }}"
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.apigateway.containerPort }}
           resources:
             limits:
               cpu: {{ .Values.apigateway.resources.limits.cpu }}
