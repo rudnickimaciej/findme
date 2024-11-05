@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ printf "%s-service" .Values.postservice.name }}
   labels:
-    {{- include "findme-chart.labels" . | nindent 4 }}
+    app: {{ include "findme-chart.name" . }}
 spec:
   type: {{ .Values.postservice.service.type }}
   ports:
     - port: {{ .Values.postservice.service.port }}
       targetPort: {{ .Values.postservice.service.targetPort }}
   selector:
-    {{- include "findme-chart.selectorLabels" . | nindent 4 }}
+    app: {{ include "findme-chart.name" . }}

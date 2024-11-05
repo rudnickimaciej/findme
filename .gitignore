@@ -239,3 +239,5 @@ paket-files/
 /ApiGateway/ocelot.dev.json
 /ApiGateway/ocelot.K8S.json
 /EmailService/appsettings.json
+
+K8S/findme-chart/values-secret.yaml

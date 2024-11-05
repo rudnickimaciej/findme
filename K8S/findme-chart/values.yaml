@@ -81,8 +81,28 @@ postservice:
     create: false  
     name: ""     
 
+sqlserver:
+  replicaCount: 2
+  name: sqlserver
+  image:
+    repository: mcr.microsoft.com/mssql/server
+    tag: 2019-latest
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 1433
+    targetPort: 1433
+    containerPort: 1433
+    protocol: TCP
+
+  serviceAccount:
+    create: false  
+    name: ""     
+
 autoscaling:
   enabled: false
 
 ingress:
   enabled: false
+

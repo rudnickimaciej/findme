@@ -34,12 +34,12 @@ app.MapWhen(context => context.Request.Path.StartsWithSegments("/routes"), appBu
             UpstreamPathTemplate = route.UpstreamTemplatePattern?.OriginalValue, // UpstreamPathTemplate
             UpstreamHttpMethod = route.UpstreamHttpMethod,                       // UpstreamHttpMethod
             DownstreamScheme = route.DownstreamRoute[0].DownstreamScheme,        // DownstreamScheme
-            DownstreamPathTemplate = route.DownstreamRoute[0].DownstreamPathTemplate.Value, // DownstreamPathTemplate
-            DownstreamHostAndPorts = route.DownstreamRoute[0].DownstreamAddresses.Select(hostPort => new
-            {
-                Host = hostPort.Host,                                            // Downstream Host
-                Port = hostPort.Port                                             // Downstream Port
-            })
+            DownstreamPathTemplate = route.DownstreamRoute[0].DownstreamHostAndPorts.Value, // DownstreamPathTemplate
+            // DownstreamHostAndPorts = route.DownstreamRoute[0]..Select(hostPort => new
+            // {
+            //     Host = hostPort,                                            // Downstream Host
+            //     Port = hostPort.Port                                             // Downstream Port
+            // })
         });
 
 
